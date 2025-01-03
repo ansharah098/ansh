@@ -1,10 +1,8 @@
 import React from "react";
-import Header from "../Components/Header/page";
  export default function Cart(){
     return(
         <main>
             <div>
-            <Header />
 
             <div className=" mt-[40px] bg-gray-200 ">
                 <div className="w-full h-[800px]">

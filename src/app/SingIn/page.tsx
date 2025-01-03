@@ -1,6 +1,8 @@
-import React from "react";
+"use client"
+import React, { useState } from "react";
 import { MdOutlineMailOutline } from "react-icons/md";
 import { FaRegEyeSlash } from "react-icons/fa";
+import Link from "next/link";
 
 export default function SingIn () {
 return(
@@ -39,12 +41,17 @@ return(
 
          </div>
          </div>
+
+
          <div className="flex justify-center pt-[50px] ">
-         <button className="text-white w-[400px] text-xl rounded-full h-[50px] bg-[#2A254B]">Singup</button>
+         
+         <button  className="text-white w-[400px] text-xl rounded-full h-[50px] bg-[#2A254B]">SingIn</button>
          </div>
          <div className="flex justify-center pt-[10px]">
          <p>Don't have an account?</p> 
-         <a href="">SingUp</a>
+
+        <Link className="hover:text-blue-500" href="/Singup">SingUp</Link>
+
          </div>
         </form>
         </div>

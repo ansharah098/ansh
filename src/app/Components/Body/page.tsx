@@ -1,28 +1,71 @@
-import React from "react";
+"use client"
+import { client } from "@/sanity/lib/client";
+import { urlFor } from "@/sanity/lib/image";
+import { groq } from "next-sanity";
+import Image from "next/image";
+import Link from "next/link";
+import React, { useEffect, useState } from "react";
 
 export default function Body(){
+    const [Body, setBody]= useState([])
+    useEffect(() => {
+        const fetchbody = async () => {
+            try{
+                const fetchedbody = await client.fetch (groq`*[_type == "Body"]`)
+                setBody(fetchedbody)
+            } catch (error) {
+                console.log("error")
+            }
+        }
+          fetchbody()
+             
+    });
+
+
     return(
+
         <main>
-            <div className=" m-[30px] mt-[90px] bg-[#2A254B] ">
-     <div className="flex justify-between  ">
-     <div className="p-[40px]  "> 
-     <h1 className="text-white text-2xl font-bold mb-[60px]"> The furniture brand for the future with <br /> the timeless designs</h1>
-     <div className="">
+
+        {
+            Body.map((body:any, index:number) => {
+              const imageUrl = body.images[0]?.asset?
+              urlFor(body.images[0].asset).url() : "no image" 
+
+              return(
+               <Link key={index} href={`/Body/`}>
+              
+    <div className=" ml-[20px] mt-[90px] bg-[#2A254B] ">
+     <div className="flex justify-between ">
+     <div className="p-[60px]"> 
+        <h1 className="text-white text-2xl font-bold mb-[60px] "> {body.name}</h1>
+        <p className="text-white text-xl mt-[100px]"> {body.Description}</p>
+        <div className="pt-[40px]">
      <button className="text-white font-bold border-gray-500 border-2 w-[176px] h-[56px] mb-[110px] ">
             view collection
         </button>
         </div>
-        <p className="text-white mt-[100px]">  A new era in eco-friendly furniture with Avion, the French luxury retail brand
-                  <br /> with sleek fonts, full colors, and a beautiful way to display things digitally
-                  <br /> using modern web technologies.</p>
-       
       </div>
-        <div className="flex items-right">
-        <img className="w-[520px] h-[584px]" src="Right Image.png" alt="No image" />
-        </div>
+      
+      <div>
+                <Image 
+                className="w-[1000px] h-[600px]"
+                src={imageUrl}
+                alt="no image"
+                width = {1000}
+                height={1000}
+                />
+                </div>
        
         </div>
         </div>
+
+
+
+               </Link>
+              )
+              
+            })}
+           
         
         </main>
     )
